@@ -3,6 +3,8 @@ import App from "./App.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { Provider } from 'react-redux';
+import { store } from './app/store.ts';
 
 const darkTheme = createTheme({
   palette: {
@@ -11,10 +13,12 @@ const darkTheme = createTheme({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
+  </Provider>,
 );

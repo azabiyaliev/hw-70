@@ -5,14 +5,15 @@ export interface IContactForm {
   photoUrl: string;
 }
 
-// export interface IQuote {
-//   id: string;
-//   category: string;
-//   author: string;
-//   quote: string;
-// }
-//
-// export interface IQuoteAPI {
-//   [id: string]: IQuote;
-// }
+export interface IContact {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  photoUrl: string;
+}
+
+export interface IContactAPI {
+  [id: string]: IContact;
+}
 

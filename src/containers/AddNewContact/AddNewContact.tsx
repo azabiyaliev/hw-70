@@ -1,8 +1,8 @@
 import { Button, Container, TextField } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { IContactForm } from '../types';
-import axiosAPI from '../axiosAPI.ts';
+import { IContactForm } from '../../types';
+import axiosAPI from '../../axiosAPI.ts';
 import Box from '@mui/material/Box';
 
 const initialForm = {
@@ -14,6 +14,7 @@ const initialForm = {
 
 const AddNewContact = () => {
   const [form, setForm] = useState<IContactForm>({ ...initialForm });
+  const navigate = useNavigate();
 
   useEffect(() => {
     setForm((prevState) => ({
@@ -33,20 +34,17 @@ const AddNewContact = () => {
     e.preventDefault();
     try {
       await axiosAPI.post("contacts.json", { ...form });
+      navigate("/contacts");
     } catch (e) {
       console.log(e);
     }
   };
 
-  console.log(form);
-
   return (
-        <form onSubmit={submitForm} className="d-flex flex-column justify-content-between">
-          <Container maxWidth="xl">
-
-          <h1>Add new contact</h1>
-
-          <Box
+    <form onSubmit={submitForm} className="d-flex flex-column justify-content-between">
+      <Container maxWidth="xl">
+        <h1>Add new contact</h1>
+        <Box
             sx={{
               py: 3,
               display: 'grid',
@@ -55,7 +53,7 @@ const AddNewContact = () => {
               width: '100%',
             }}
           >
-            <TextField
+          <TextField
               sx={{me: 'auto', maxWidth: 400}}
               type="text"
               id="outlined-basic"
@@ -93,7 +91,7 @@ const AddNewContact = () => {
             />
             <div>
               <p>Photo preview:</p>
-              <img width={200} height={200} alt={form.photoUrl} src={form.photoUrl}/>
+              <img style={{maxWidth: 200, maxHeight: 200}} alt={form.photoUrl} src={form.photoUrl}/>
             </div>
             <div
               style={{maxWidth: 400}}
@@ -112,7 +110,7 @@ const AddNewContact = () => {
                 sx={{me: 'auto', width: '50%'}}
                 color="inherit"
                 variant="outlined"
-                to="/"
+                to="/contacts"
                 component={NavLink}
               >
                 Back to contacts
@@ -120,7 +118,6 @@ const AddNewContact = () => {
             </div>
           </Box>
           </Container>
-
         </form>
   );
 };
